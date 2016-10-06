@@ -1,3 +1,5 @@
+package other;
+
 import states.State;
 
 /**
@@ -6,9 +8,15 @@ import states.State;
 public class StateHandler {
     private static State currentState;
 
+    public StateHandler(State initialState){
+        this.currentState = initialState;
+    }
 
     public static State getCurrentState() {
         return currentState;
+    }
+    public void printCurrentState(){
+        System.out.println(currentState);
     }
 
     public void consumeMessage(Message m) throws ThisShouldNeverHappenException {
@@ -41,7 +49,7 @@ public class StateHandler {
                 throw new ThisShouldNeverHappenException();
 
         }
-
+        printCurrentState();
 
     }
 

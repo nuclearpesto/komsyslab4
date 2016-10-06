@@ -19,5 +19,10 @@ public class Available extends State {
 
         return new RingingInvited();
     }
+
+    @Override
+    public String toString() {
+        return "Available{}";
+    }
 }
 

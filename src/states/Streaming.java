@@ -17,4 +17,9 @@ public class Streaming extends State {
         //send BYE
         return new ShutDown();
     }
+
+    @Override
+    public String toString() {
+        return "Streaming{}";
+    }
 }

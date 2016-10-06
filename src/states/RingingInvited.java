@@ -6,6 +6,11 @@ package states;
 public class RingingInvited extends State{
 
     @Override
+    public String toString() {
+        return "RingingInvited{}";
+    }
+
+    @Override
     public State ack() {
         return new Streaming();
 

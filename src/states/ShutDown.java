@@ -9,4 +9,9 @@ public class ShutDown  extends State{
     public State ok() {
         return new Available();
     }
+
+    @Override
+    public String toString() {
+        return "ShutDown{}";
+    }
 }
