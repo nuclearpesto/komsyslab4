@@ -6,14 +6,14 @@ package states;
 public abstract class State {
 
 
-    public State TRO() {
+    public State TRO(String suplementalData) {
         return this;
     }
 
     public State invite() {
         return this;
     }
-    public State invited(){
+    public State invited(String suplementalData){
         return this;
     }
 

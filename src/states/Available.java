@@ -8,11 +8,12 @@ public class Available extends State {
     @Override
     public State invite() {
         //send invite
+
         return new Ringing();
     }
 
     @Override
-    public State invited() {
+    public State invited(String suplementalData) {
         //save socket of client
 
         //send TRO
