@@ -4,10 +4,8 @@ import Network.NetworkHandler;
 import states.Available;
 
 import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.net.SocketException;
+import java.net.*;
+import java.util.Scanner;
 
 public class Main {
 
@@ -23,11 +21,14 @@ public class Main {
         }
         new Thread(nh).start();
         AudioStreamUDP aus = new AudioStreamUDP();
-        aus.connectTo( Inet4Address.getLocalHost(),9999);
+        InetAddress addr = InetAddress.getByName("130.229.168.62");
+        System.out.println(aus.getLocalPort());
+
+        Scanner sc = new Scanner(System.in);
+        int port = sc.nextInt();
+        aus.connectTo(addr,port);
+        System.out.println(aus.getLocalPort());
         aus.startStreaming();
-        AudioStreamUDP aus2 = new AudioStreamUDP();
-        aus2.connectTo( Inet4Address.getLocalHost(),9999);
-        aus2.startStreaming();
 
 
 
@@ -36,8 +37,7 @@ public class Main {
         }catch (InterruptedException e ){
 
         }
-        aus.stopStreaming();
-        aus2.stopStreaming();
+       // aus.stopStreaming();
 
     }
 }

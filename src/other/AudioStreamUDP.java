@@ -8,7 +8,7 @@ import javax.sound.sampled.*;
 public class AudioStreamUDP {
 	
 	public static final int BUFFER_VS_FRAMES_RATIO = 16; //32
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 	public static final int TIME_OUT = 5000; // Time out for receiving packets
 
 	public AudioStreamUDP() throws IOException {
@@ -94,8 +94,10 @@ class Receiver implements Runnable{
 	    	
 	    	line.start();
             int packets = 0;
-            while (receiverThread != null) {
-            	socket.receive(packet);
+			System.out.println("RECIEVER: gonna do stuff");
+			while (receiverThread != null) {
+				System.out.println("RECIEVER: BEFORE RECIEVE");
+				socket.receive(packet);
             	// Who's the sender?
             	if(remoteHost.equals(packet.getAddress())) {
                     numBytesRead = packet.getLength();
