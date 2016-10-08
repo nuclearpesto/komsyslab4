@@ -14,6 +14,13 @@ public class NetworkMessage extends Message{
 
     }
 
+    @Override
+    public String toString() {
+        return "NetworkMessage{" +
+                "s=" + s +
+                '}';
+    }
+
     public InetSocketAddress getSocketAddress() {
         return s;
     }

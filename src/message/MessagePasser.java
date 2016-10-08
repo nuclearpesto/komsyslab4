@@ -19,6 +19,7 @@ public class MessagePasser<T extends Message>{
 
     public void sendMessage(Object o, T t){
         System.out.println("trying to send message" + stateFunctions.keySet());
+        System.out.println("message " + t);
         for(Object obj : stateFunctions.keySet()){
             if(!obj.equals(o)){
                 System.out.println("sending message to o" + obj.toString());
