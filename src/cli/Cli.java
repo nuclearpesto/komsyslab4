@@ -40,9 +40,9 @@ public class Cli implements Runnable {
                         System.out.println("type correctly idiot");
                     }
                 }
-            } else if (line.equals("bye")) {
+            } else if (line.equals("dc")) {
 
-                internalPasser.sendMessage(this, new InternalMessage(null, Message.Signal.BYE, null));
+                internalPasser.sendMessage(this, new InternalMessage(null, Message.Signal.SHUTDOWN, null));
             } else {
                 System.out.println("not a command");
             }

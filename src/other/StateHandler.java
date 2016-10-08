@@ -65,6 +65,7 @@ public class StateHandler {
                     return;
 
             }
+            printCurrentState();
         }
     }
 
