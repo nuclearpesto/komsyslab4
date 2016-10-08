@@ -12,7 +12,14 @@ public class AudioStreamUDP {
 	public static final int TIME_OUT = 5000; // Time out for receiving packets
 
 	public AudioStreamUDP() throws IOException {
+
+		//modified by David Boeryd, Tony Tran
+
+		//hardcoded recievprto to defeat firefwall blocking
 		this.receiverSocket = new DatagramSocket(5555);
+
+		//end modify
+
 		//receiverSocket.setSoTimeout(TIME_OUT);
 		this.senderSocket = new DatagramSocket();
 	    

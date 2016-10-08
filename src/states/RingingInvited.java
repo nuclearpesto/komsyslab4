@@ -1,5 +1,7 @@
 package states;
 
+import other.StateHandler;
+
 /**
  * Created by archer on 2016-10-06.
  */
@@ -11,7 +13,8 @@ public class RingingInvited extends State{
     }
 
     @Override
-    public State ack() {
+    public State ack(StateHandler stateHandler) {
+        stateHandler.getAus().startStreaming();
         return new Streaming();
 
     }
