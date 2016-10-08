@@ -54,6 +54,7 @@ public class StateHandler {
         synchronized (currentState) {
             switch (m.getSignal()) {
                 case INVITE:
+                    System.out.println(m.getSocketAddress().toString());
                     currentState = currentState.invite(this, m.getSocketAddress());
                     break;
                 case SHUTDOWN:
@@ -100,7 +101,10 @@ public class StateHandler {
     }
 
     public void sendInvite() {
-        networkPasser.sendMessage(this, new NetworkMessage(null, Message.Signal.INVITE, clientAddress));
+        System.out.println("HELLÖ" + clientAddress.toString());
+        NetworkMessage networkMessage = new NetworkMessage(null, Message.Signal.INVITE, clientAddress);
+        System.out.println(networkMessage);
+        networkPasser.sendMessage(this, networkMessage);
     }
 
     public void sendBye() {
@@ -120,6 +124,7 @@ public class StateHandler {
     }
 
     public void sendError() {
+        System.out.println("IN SEND ERROR "+clientAddress.toString());
         networkPasser.sendMessage(this, new NetworkMessage(null, Message.Signal.ERROR, clientAddress));
     }
 
