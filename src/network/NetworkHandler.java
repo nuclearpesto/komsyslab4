@@ -1,16 +1,12 @@
-package Network;
+package network;
 
-import other.Message;
-import other.MessagePasser;
+import message.Message;
+import message.NetworkMessage;
+import message.MessagePasser;
 import other.StateHandler;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketAddress;
-import java.net.SocketException;
-import java.nio.charset.MalformedInputException;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -27,11 +23,10 @@ public class NetworkHandler implements Runnable {
     byte[] outputBuf = new byte[buffsize];
     private boolean inited = false;
     private boolean shutdown = false;
-    private static MessagePasser mp;
+    private MessagePasser<NetworkMessage> mp;
 
-    public NetworkHandler(int localport, StateHandler stha, MessagePasser mp) {
+    public NetworkHandler(int localport,  MessagePasser<NetworkMessage> mp) {
         this.port = localport;
-        this.stha = stha;
         this.mp = mp;
         register();
     }
@@ -49,22 +44,22 @@ public class NetworkHandler implements Runnable {
     }
 
 
-    public void sendMessage(Message str) {
-        if (clientAddress == null) {
-            System.out.println("No client GO AWAY!");
+    public void sendMessage(NetworkMessage msg) {
+        if (msg.getSocketAddress() == null) {
+            System.out.println("No client in msg");
             // dont throw exception because of lambdas
             return;
         }
         String res = null;
-        try{
-            res = messageToNet(str);
-        }catch(MalformedMessageException e){
-            System.out.println("Malformed Message");
+        try {
+            res = messageToNet(msg);
+        } catch (MalformedMessageException e) {
+            System.out.println("Malformed message");
             return;
         }
         DatagramPacket p = new DatagramPacket(outputBuf, buffsize);
         p.setData(res.getBytes());
-        p.setSocketAddress(clientAddress);
+        p.setSocketAddress(msg.getSocketAddress());
         try {
             d.send(p);
         } catch (IOException e) {
@@ -78,34 +73,37 @@ public class NetworkHandler implements Runnable {
     private void recieveMsg() throws IOException {
         DatagramPacket recv = new DatagramPacket(inputBuf, buffsize);
         d.receive(recv);
-        clientAddress = recv.getSocketAddress();
         byte[] b = Arrays.copyOfRange(recv.getData(), 0, recv.getLength());
         String recieved = new String(b, StandardCharsets.UTF_8).trim();
-        String[] parts = recieved.split(":");
-        String suplementalData = null;
-        if (parts.length > 1) {
-            // TODO: 2016-10-07 get all data if there is more then 2 parts
-            suplementalData = parts[2];
+        String msgType;
+        String suplementalData= "";
+        if (recieved.indexOf(":") != -1) {
+            msgType = recieved.substring(0, recieved.indexOf(":"));
+            suplementalData = recieved.substring(recieved.indexOf(":"));
+        } else {
+            msgType = recieved;
         }
-        switch (parts[0]) {
+
+
+        switch (msgType) {
             case "INVITE":
-                stha.consumeMessage(new Message(suplementalData, Message.Signal.INVITED));
+                mp.sendMessage(this,new NetworkMessage(suplementalData, Message.Signal.INVITED, new InetSocketAddress(d.getInetAddress(), d.getPort())));
                 //dosuccess
                 break;
             case "BYE":
-                stha.consumeMessage(new Message(suplementalData, Message.Signal.BYE));
+                mp.sendMessage(this,new NetworkMessage(suplementalData, Message.Signal.BYE, new InetSocketAddress(d.getInetAddress(),d.getPort())));
                 break;
             case "TRO":
-                stha.consumeMessage(new Message(suplementalData, Message.Signal.TRO));
+                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.TRO, new InetSocketAddress(d.getInetAddress(),d.getPort())));
                 break;
             case "ACK":
-                stha.consumeMessage(new Message(suplementalData, Message.Signal.ACK));
+                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.ACK, new InetSocketAddress(d.getInetAddress(),d.getPort())));
                 break;
             case "OK":
-                stha.consumeMessage(new Message(suplementalData, Message.Signal.OK));
+                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.OK, new InetSocketAddress(d.getInetAddress(),d.getPort())));
                 break;
             case "ERROR":
-                stha.consumeMessage(new Message(suplementalData, Message.Signal.ERROR));
+                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.ERROR, new InetSocketAddress(d.getInetAddress(),d.getPort())));
                 break;
             default:
                 //do error
@@ -114,17 +112,17 @@ public class NetworkHandler implements Runnable {
 
     }
 
-    public String messageToNet(Message m) throws MalformedMessageException {
+    public String messageToNet(NetworkMessage m) throws MalformedMessageException {
         //if invite/tro should validate correct data
         String res = m.getMessage().toString();
         int data;
         if (m.getMessage().equals(Message.Signal.INVITE) || m.getMessage().equals(Message.Signal.TRO)) {
-            try{
+            try {
                 data = Integer.parseInt(m.getSupplementalData());
-                if(data <= 1024 || data > Short.MAX_VALUE){
+                if (data <= 1024 || data > Short.MAX_VALUE) {
                     throw new MalformedMessageException("port invalid");
                 }
-            }catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 throw new MalformedMessageException(e);
             }
             res += ":" + m.getSupplementalData();

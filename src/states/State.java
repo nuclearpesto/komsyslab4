@@ -2,6 +2,9 @@ package states;
 
 import other.StateHandler;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+
 /**
  * Created by archer on 2016-10-06.
  */
@@ -11,15 +14,15 @@ public abstract class State {
         return this;
     }
 
-    public State TRO(StateHandler stateHandler, String suplementalData) {
+    public State TRO(StateHandler stateHandler) {
         return this;
     }
 
-    public State invite(StateHandler stateHandler) {
+    public State invite(StateHandler stateHandler, InetSocketAddress socketAddress) {
         return this;
     }
 
-    public State invited(StateHandler stateHandler, String suplementalData) {
+    public State invited(StateHandler stateHandler, InetSocketAddress suplementalData) {
         return this;
     }
 

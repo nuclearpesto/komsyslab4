@@ -1,43 +1,33 @@
-package other;
+package message;
 
-import Network.NetworkHandler;
-
-import java.util.HashMap;
-import java.util.Observable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Created by archer on 2016-10-07.
  */
-public class MessagePasser implements Runnable{
-    public ConcurrentHashMap<Object,Consumer<Message>> stateFunctions;
+public class MessagePasser<T extends Message>{
+    public ConcurrentHashMap<Object,Consumer<T>> stateFunctions;
 
     public MessagePasser() {
         this.stateFunctions = new ConcurrentHashMap<>();
     }
 
-    public void register(Object sender, Consumer<Message> func){
+    public void register(Object sender, Consumer<T> func){
         stateFunctions.put(sender,func);
     }
 
-    public void sendMessage(Object o,Message m){
+    public void sendMessage(Object o, T t){
         System.out.println("trying to send message" + stateFunctions.keySet());
         for(Object obj : stateFunctions.keySet()){
             if(!obj.equals(o)){
                 System.out.println("sending message to o" + obj.toString());
-                stateFunctions.get(obj).accept(m);
+                stateFunctions.get(obj).accept(t);
             }
         }
     }
 
     public void deregister(Object o){
         stateFunctions.remove(o);
-    }
-
-    @Override
-    public void run() {
-
     }
 }

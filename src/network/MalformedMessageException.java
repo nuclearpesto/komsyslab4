@@ -1,4 +1,4 @@
-package Network;
+package network;
 
 /**
  * Created by archer on 2016-10-07.
