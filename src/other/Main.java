@@ -29,7 +29,6 @@ public class Main {
         new Thread(nh).start();
 
 
-        internalPasser.sendMessage(new Object(),new InternalMessage(null, Message.Signal.INVITE,new InetSocketAddress("breadtemper.com",5554)));
         //AudioStreamUDP audioStreamUDP = new AudioStreamUDP();
 
         try{
