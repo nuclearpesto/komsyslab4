@@ -5,7 +5,7 @@ package message;
  */
 public class Message {
 
-    private Signal message;
+    private Signal signal;
     private String supplementalData;
 
     public enum Signal {
@@ -15,7 +15,7 @@ public class Message {
         OK,
         ACK,
         ERROR,
-        //internal message not for network
+        //internal signal not for network
         SHUTDOWN,
         INVITE
 
@@ -24,11 +24,11 @@ public class Message {
 
     public Message(String supplementalData, Signal message) {
         this.supplementalData = supplementalData;
-        this.message = message;
+        this.signal = message;
     }
 
-    public Signal getMessage() {
-        return message;
+    public Signal getSignal() {
+        return signal;
     }
 
     public String getSupplementalData() {

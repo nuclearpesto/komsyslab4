@@ -7,7 +7,6 @@ import static java.lang.Thread.sleep;
 import message.*;
 
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 
 /**
  * Created by archer on 2016-10-06.
@@ -53,7 +52,7 @@ public class StateHandler {
 
     public void consumeInternalMessage(InternalMessage m) {
         synchronized (currentState) {
-            switch (m.getMessage()) {
+            switch (m.getSignal()) {
                 case INVITE:
                     currentState = currentState.invite(this, m.getSocketAddress());
                     break;
@@ -72,8 +71,8 @@ public class StateHandler {
         stopTimer();
 
         synchronized (currentState) {
-            System.out.println(m.getMessage().toString());
-            switch (m.getMessage()) {
+            System.out.println(m.getSignal().toString());
+            switch (m.getSignal()) {
                 case BYE:
                     currentState = currentState.bye(this);
                     break;

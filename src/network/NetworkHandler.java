@@ -115,9 +115,9 @@ public class NetworkHandler implements Runnable {
 
     public String messageToNet(NetworkMessage m) throws MalformedMessageException {
         //if invite/tro should validate correct data
-        String res = m.getMessage().toString();
-        int data;
-        if (m.getMessage().equals(Message.Signal.INVITE) || m.getMessage().equals(Message.Signal.TRO)) {
+        String res = m.getSignal().toString();
+
+        /*if (m.getSignal().equals(Message.Signal.INVITE) || m.getSignal().equals(Message.Signal.TRO)) {
             try {
                 data = Integer.parseInt(m.getSupplementalData());
                 if (data <= 1024 || data > Short.MAX_VALUE) {
@@ -127,7 +127,7 @@ public class NetworkHandler implements Runnable {
                 throw new MalformedMessageException(e);
             }
             res += ":" + m.getSupplementalData();
-        }
+        }*/
         return res;
 
     }
