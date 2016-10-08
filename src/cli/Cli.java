@@ -46,8 +46,6 @@ public class Cli implements Runnable {
             } else {
                 System.out.println("not a command");
             }
-
-
         }
     }
 }
