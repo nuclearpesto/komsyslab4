@@ -9,8 +9,8 @@ import java.util.function.Consumer;
 public class MessagePasser<T extends Message>{
     public ConcurrentHashMap<Object,Consumer<T>> stateFunctions;
 
-    public MessagePasser() {
-        this.stateFunctions = new ConcurrentHashMap<>();
+    public MessagePasser(ConcurrentHashMap<Object,Consumer<T>> stateFunctions) {
+        this.stateFunctions = stateFunctions;
     }
 
     public void register(Object sender, Consumer<T> func){
