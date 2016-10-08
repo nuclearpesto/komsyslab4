@@ -100,6 +100,7 @@ public class StateHandler {
     }
 
     public void sendInvite() {
+
         networkPasser.sendMessage(this, new NetworkMessage(null, Message.Signal.INVITE, clientAddress));
     }
 
