@@ -75,7 +75,7 @@ public class StateHandler {
 
         synchronized (currentState) {
             System.out.println(m.getSignal().toString());
-            if(clientAddress != null || !m.getSocketAddress().equals(clientAddress)){
+            if(clientAddress != null && !m.getSocketAddress().equals(clientAddress)){
                 System.out.println("got command from somewhere other than client");
                 return;
             }

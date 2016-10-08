@@ -36,4 +36,12 @@ public class RingingInvited extends State {
         stateHandler.setClientAddress(null);
         return new Available();
     }
+
+
+    @Override
+    public State error(StateHandler stateHandler) {
+
+        stateHandler.setClientAddress(null);
+        return new Available();
+    }
 }

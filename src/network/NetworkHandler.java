@@ -108,7 +108,7 @@ public class NetworkHandler implements Runnable {
                 mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.ERROR, new InetSocketAddress(recv.getAddress(),recv.getPort())));
                 break;
             default:
-                //do error
+                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.ERROR, new InetSocketAddress(recv.getAddress(), recv.getPort())));
                 break;
         }
 

@@ -13,6 +13,7 @@ public class Streaming extends State {
         //send ok
         stateHandler.getAus().stopStreaming();
         stateHandler.sendOK();
+        stateHandler.setClientAddress(null);
         return new Available();
     }
 
@@ -24,6 +25,14 @@ public class Streaming extends State {
         State nextState = new ShutDown();
         stateHandler.setTimer(nextState);
         return nextState;
+    }
+
+    @Override
+    public State error(StateHandler stateHandler) {
+        stateHandler.getAus().stopStreaming();
+        stateHandler.setClientAddress(null);
+        return new Available();
+
     }
 
     @Override

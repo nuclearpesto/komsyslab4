@@ -43,4 +43,11 @@ public class Ringing extends State {
         return new Available();
 
     }
+
+    @Override
+    public State error(StateHandler stateHandler) {
+
+        stateHandler.setClientAddress(null);
+        return new Available();
+    }
 }
