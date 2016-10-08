@@ -21,6 +21,15 @@ public class Main {
         }
         new Thread(nh).start();
 
+        AudioStreamUDP audioStreamUDP = new AudioStreamUDP();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter ip");
+        String ip = sc.nextLine();
+        System.out.println("enter port");
+        int port = sc.nextInt();
+
+        audioStreamUDP.connectTo(InetAddress.getByName(ip),port);
 
 
         try{
@@ -28,6 +37,7 @@ public class Main {
         }catch (InterruptedException e ){
 
         }
+
        // aus.stopStreaming();
 
     }
