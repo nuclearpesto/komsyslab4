@@ -17,7 +17,7 @@ public class RingingInvited extends State {
     @Override
     public State ack(StateHandler stateHandler) {
         try {
-            stateHandler.getAus().connectTo(stateHandler.getClientAddress().getAddress(), stateHandler.getClientAddress().getPort());
+            stateHandler.getAus().connectTo(stateHandler.getClientAddress().getAddress(), stateHandler.getClientAddress().getPort()+1);
             stateHandler.getAus().startStreaming();
         } catch (IOException e) {
             e.printStackTrace();
