@@ -88,23 +88,23 @@ public class NetworkHandler implements Runnable {
 
         switch (msgType) {
             case "INVITE":
-                mp.sendMessage(this,new NetworkMessage(suplementalData, Message.Signal.INVITED, new InetSocketAddress(d.getInetAddress(), d.getPort())));
+                mp.sendMessage(this,new NetworkMessage(suplementalData, Message.Signal.INVITED, new InetSocketAddress(recv.getAddress(), recv.getPort())));
                 //dosuccess
                 break;
             case "BYE":
-                mp.sendMessage(this,new NetworkMessage(suplementalData, Message.Signal.BYE, new InetSocketAddress(d.getInetAddress(),d.getPort())));
+                mp.sendMessage(this,new NetworkMessage(suplementalData, Message.Signal.BYE, new InetSocketAddress(recv.getAddress(),recv.getPort())));
                 break;
             case "TRO":
-                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.TRO, new InetSocketAddress(d.getInetAddress(),d.getPort())));
+                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.TRO, new InetSocketAddress(recv.getAddress(),recv.getPort())));
                 break;
             case "ACK":
-                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.ACK, new InetSocketAddress(d.getInetAddress(),d.getPort())));
+                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.ACK, new InetSocketAddress(recv.getAddress(),recv.getPort())));
                 break;
             case "OK":
-                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.OK, new InetSocketAddress(d.getInetAddress(),d.getPort())));
+                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.OK, new InetSocketAddress(recv.getAddress(),recv.getPort())));
                 break;
             case "ERROR":
-                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.ERROR, new InetSocketAddress(d.getInetAddress(),d.getPort())));
+                mp.sendMessage(this, new NetworkMessage(suplementalData, Message.Signal.ERROR, new InetSocketAddress(recv.getAddress(),recv.getPort())));
                 break;
             default:
                 //do error
