@@ -30,8 +30,9 @@ public class Available extends State {
         //send TRO
         stateHandler.setClientAddress(clientAddress);
         stateHandler.sendTro();
-
-        return new RingingInvited();
+        State nextState =  new RingingInvited();
+        stateHandler.setTimer(nextState);
+        return nextState;
     }
 
     @Override

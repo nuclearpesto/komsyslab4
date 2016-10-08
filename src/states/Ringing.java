@@ -36,11 +36,11 @@ public class Ringing extends State {
 
     @Override
     public State timeout(StateHandler stateHandler) {
-       //send error
+        //send error
         stateHandler.sendError();
         //not communicating with client
         stateHandler.setClientAddress(null);
-         return new Available();
+        return new Available();
 
     }
 }
