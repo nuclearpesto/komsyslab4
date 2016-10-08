@@ -75,6 +75,10 @@ public class StateHandler {
 
         synchronized (currentState) {
             System.out.println(m.getSignal().toString());
+            if(clientAddress != null || !m.getSocketAddress().equals(clientAddress)){
+                System.out.println("got command from somewhere other than client");
+                return;
+            }
             switch (m.getSignal()) {
                 case BYE:
                     currentState = currentState.bye(this);
@@ -190,6 +194,7 @@ public class StateHandler {
                     return;
                 } else {
                     currentState = requester.timeout(sth);
+                    printCurrentState();
                 }
             }
 

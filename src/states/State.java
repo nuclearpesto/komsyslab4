@@ -3,7 +3,6 @@ package states;
 import other.StateHandler;
 
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 
 /**
  * Created by archer on 2016-10-06.
@@ -45,4 +44,6 @@ public abstract class State {
     public State error(StateHandler stateHandler) {
         return this;
     }
+
+
 }

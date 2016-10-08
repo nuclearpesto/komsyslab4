@@ -3,7 +3,6 @@ package states;
 import other.StateHandler;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
 /**
  * Created by archer on 2016-10-06.
@@ -21,6 +20,7 @@ public class Ringing extends State {
 
     @Override
     public State TRO(StateHandler stateHandler) {
+
         //send ack
         stateHandler.sendAck();
         try {
