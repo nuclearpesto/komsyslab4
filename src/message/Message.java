@@ -22,6 +22,7 @@ public class Message {
 
     }
 
+
     public Message(String supplementalData, Signal message) {
         this.supplementalData = supplementalData;
         this.signal = message;

@@ -7,7 +7,7 @@ import java.net.SocketAddress;
  * Created by archer on 2016-10-08.
  */
 public class InternalMessage extends Message {
-    InetSocketAddress socketAddress;
+   private InetSocketAddress socketAddress;
 
     public InetSocketAddress getSocketAddress() {
         return socketAddress;
