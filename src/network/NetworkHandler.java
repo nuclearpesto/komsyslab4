@@ -55,6 +55,7 @@ public class NetworkHandler implements Runnable {
             res = messageToNet(msg);
         } catch (MalformedMessageException e) {
             System.out.println("Malformed message");
+            e.printStackTrace();
             return;
         }
         DatagramPacket p = new DatagramPacket(outputBuf, buffsize);
