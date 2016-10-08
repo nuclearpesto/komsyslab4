@@ -1,5 +1,6 @@
 package other;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import states.State;
 
 import static java.lang.Thread.sleep;
@@ -43,7 +44,7 @@ public class StateHandler {
     }
 
     public void printCurrentState() {
-        System.out.println(currentState);
+        System.out.println("State is now: " + currentState);
     }
 
     public AudioStreamUDP getAus() {
@@ -156,7 +157,6 @@ public class StateHandler {
         private boolean destroy = false;
 
         public Timer(long timeout, State requester, StateHandler sth) {
-            this.starttime = starttime;
             this.timeout = timeout;
             this.requester = requester;
             this.sth = sth;
@@ -169,11 +169,14 @@ public class StateHandler {
 
         @Override
         public void run() {
+            starttime = System.currentTimeMillis();
             while (System.currentTimeMillis() < (starttime + timeout)) {
                 try {
+                    System.out.println("TimeoutTime, currentime" + (starttime+timeout)+ " : " + System.currentTimeMillis());
                     sleep(Math.abs(starttime + timeout - System.currentTimeMillis()));
                 } catch (InterruptedException e) {
                     //we have been canceled
+                    System.out.println("TIMER INTERRUPTED DESTROY IS " + destroy);
                     if (destroy) {
                         return;
                     }
@@ -181,6 +184,7 @@ public class StateHandler {
             }
 
             synchronized (currentState) {
+                System.out.println("TIMED OUT FOR REQUESTER: " + requester);
                 if (getCurrentState() != requester) {
                     return;
                 } else {

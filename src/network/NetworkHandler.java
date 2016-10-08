@@ -58,6 +58,7 @@ public class NetworkHandler implements Runnable {
             e.printStackTrace();
             return;
         }
+        System.out.println("SENDING MESSAGE: " + msg.getSignal());
         DatagramPacket p = new DatagramPacket(outputBuf, buffsize);
         p.setData(res.getBytes());
         p.setSocketAddress(msg.getSocketAddress());
@@ -85,7 +86,7 @@ public class NetworkHandler implements Runnable {
             msgType = recieved;
         }
 
-
+        System.out.println("RECIEVED MESSAGE: " + msgType);
         switch (msgType) {
             case "INVITE":
                 mp.sendMessage(this,new NetworkMessage(suplementalData, Message.Signal.INVITED, new InetSocketAddress(recv.getAddress(), recv.getPort())));
